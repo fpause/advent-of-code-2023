@@ -1,11 +1,4 @@
 
-;
-src/main.rs,4/b/4b569f42a6967dec04275af54f4ca9ab6a4eee64
-<
-src/bin/1.rs,1/a/1ab9fe1549459201783e27d0b377ad31afc796d2
-:
-
-data/1.txt,4/d/4da4212084462406f517681144d7139f79e6994f
 :
 
 Cargo.toml,1/b/1b290eb385892bfd4870c08a785598e98c8691b7
@@ -24,11 +17,13 @@ Cargo.toml,1/b/1b290eb385892bfd4870c08a785598e98c8691b7
 src/lib.rs,b/2/b24749917179fb5e3e613ed2a703fcdcc6cdf9da
 >
 src/bin/1-2.rs,3/1/318b6ca28ff566c5d962e3a4b47fd9b95050cd92
-A
-src/bin/2-2.ts.rs,e/c/ec64f11157d91d0ced76727ddc449e1ff97ef6f5
 >
 src/bin/2-2.rs,8/3/8308a274346864a5e9cef721efc9174b86871ac2
 >
 resource/3.txt,5/7/57fe01a873052e007d0ab365a6995476663da4b1
 <
 src/bin/3.rs,f/b/fbec4021742149532e689357aab5afe1d13eebe2
+S
+#.idea/sonarlint/issuestore/index.pb,9/f/9fe84ebb15faf917b7def6236dba604453cc61e0
+]
+-.idea/sonarlint/securityhotspotstore/index.pb,8/8/88a9255124c95bdc913197c120a8d560edc59c8e
