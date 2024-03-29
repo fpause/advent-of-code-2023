@@ -6,7 +6,9 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+num-bigint = "0.4.4"
 regex = "1.10.2"
+num-traits = "0.2.18"
 
 [dependencies.uuid]
 version = "1.6.1"
