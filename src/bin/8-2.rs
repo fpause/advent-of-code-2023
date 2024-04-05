@@ -1,5 +1,7 @@
 use std::collections::HashMap;
+use std::ops::Mul;
 
+use num_bigint::BigUint;
 use num_traits::ToPrimitive;
 use prime_factorization::Factorization;
 
@@ -13,6 +15,12 @@ struct Crossing {
 struct Scenario {
     instructions: Vec<char>,
     map: HashMap<String, Crossing>,
+}
+
+#[derive(Eq, PartialEq, Clone)]
+struct PositionWithInstructionIndex {
+    position: String,
+    instruction_index: usize,
 }
 
 impl Scenario {
@@ -34,7 +42,7 @@ impl Scenario {
         }
     }
 
-    fn follow_instructions_till_zzz(&self) -> u64 {
+    fn follow_instructions_till_zzz(&self) -> BigUint {
         let mut current_positions = self.get_all_starting_positions();
 
         println!("Starting positions: {:?}", current_positions);
@@ -44,18 +52,21 @@ impl Scenario {
         for &position in current_positions.iter() {
             let mut instruction_index = 0;
             let mut visited_positions = Vec::new();
-            let mut current_position = position;
+            let mut current_position = PositionWithInstructionIndex {
+                position: position.clone(),
+                instruction_index: 0,
+            };
 
             let mut index = 0u32;
-            while !visited_positions.contains(current_position) {
+            while !visited_positions.contains(&current_position) {
                 visited_positions.push(current_position.clone());
-                let crossing = self.map.get(current_position).expect(format!("No map entry for key {}", current_position).as_str());
-                current_position = match self.instructions[instruction_index] {
+                let crossing = self.map.get(&current_position.position).unwrap();
+                current_position.position = match self.instructions[instruction_index] {
                     'L' => {
-                        &crossing.left
+                        String::from(&crossing.left)
                     }
                     'R' => {
-                        &crossing.right
+                        String::from(&crossing.right)
                     }
                     _ => {
                         panic!("Invalid instruction");
@@ -63,9 +74,10 @@ impl Scenario {
                 };
                 index += 1;
                 instruction_index = (instruction_index + 1) % self.instructions.len();
+                current_position.instruction_index = instruction_index;
             }
 
-            let cycle_start = visited_positions.iter().position(|pos| pos == current_position).unwrap().to_u32().unwrap();
+            let cycle_start = visited_positions.iter().position(|pos| pos == &current_position).unwrap().to_u32().unwrap();
             cycle_lenghts.push(index - cycle_start);
         }
 
@@ -93,10 +105,10 @@ impl Scenario {
 
         println!("Condensed prime factors: {:?}", condensed_prime);
 
-        let mut steps = 1;
-        condensed_prime.iter().for_each(|(k, v)| {
-            steps *= k.to_u64().unwrap() ^ v.to_u64().unwrap();
-        });
+        let mut steps = BigUint::from(1u32);
+        for (key, value) in condensed_prime.iter() {
+            steps = steps.mul(BigUint::from(*key).pow(*value));
+        }
         steps
     }
 
